@@ -1,5 +1,5 @@
 # BEAM SOLVER CORE
-A simple 2D beam solver for simply supported beams capable of solving any possible vertical load arrangement,
+A simple 2D beam solver for simply supported beams capable of solving any vertical load arrangement
 using the model formula approach noted in I.C.Jong's paper (LINK: https://icjong.hosted.uark.edu/docu/09.ijee.paper.pdf)
 
 # Feature Set
@@ -13,16 +13,15 @@ using the model formula approach noted in I.C.Jong's paper (LINK: https://icjong
   * etc.
 
 # Limitations
-* No support (yet) for forces and moments that aren't perpendicular to the beam span
-* No support for non-simply supported beams (although this may change in future)
+* Forces and moments that aren't perpendicular to the beam span are not supported
+* Boundary conditions other than those for simply supported beams aren't supported
 * No support for nonlinear analyses
 * Non-uniformly distributed moments are currently not supported
 * The theoretical basis for this solver uses the bernoulli beam theory, and therefore ignores the effects of shear deformations
 
-# Usage
-See user notes (TBD)
-
-# Examples
+# Usage and Examples
+## Sign Convention
+Refer `ANALYSIS_MANUAL.md` for details on the sign convention used by this library.
 ## Concentrated Loads
 Concentrated forces and moments may be defined using the `LoadInstance` object:
 ```java
