@@ -1,10 +1,17 @@
 package solver.ImperativeBaseSolver;
 
-import solver.Objects.SS_BeamModel;
+import solver.Objects.AnalysisModel;
 
-public class BeamSolver_SS_Imperative {
-  private BeamSolver_SS_Imperative(){}
-  private static int getDenominator(int exponent){
+/**
+ * Solver class housing logic for solving simply supported beams.
+ * <p>Refer source link for details : <a href="https://icjong.hosted.uark.edu/docu/09.ijee.paper.pdf">LINK</a></p>
+ */
+public class BeamSolver_SS {
+  private final AnalysisModel model;
+  public BeamSolver_SS(AnalysisModel inputModel){
+    model = inputModel;
+  }
+  private int getDenominator(int exponent){
       return switch (exponent) {
           case -2, -1, 0, 1 -> 1;
           case 2 -> 2;
@@ -15,47 +22,47 @@ public class BeamSolver_SS_Imperative {
       };
   }
 
-  private static double pointLoadAndMomentsProcessor(double loadVal,
+  private double pointLoadAndMomentsProcessor(double loadVal,
                                                      double EI, double distanceFromOrigin, int exponent, double x){
     return (-loadVal/(getDenominator(exponent)* EI))
-              * Utils_Imperative.getSingularityFunctionResult(distanceFromOrigin,exponent,x);
+              * Utils.getSingularityFunctionResult(distanceFromOrigin,exponent,x);
   }
 
-  private static double distributedLoadsProcessor(
+  private double distributedLoadsProcessor(
       double loadValAtStart,double loadValAtEnd,
       double EI,
       double distanceFromOriginAtStart, double distanceFromOriginAtEnd,
       int exponent, double x){
     return (1/(getDenominator(exponent)*EI))
-        *(-Utils_Imperative.getSingularityFunctionResult(distanceFromOriginAtStart,exponent,x)*loadValAtStart
+        *(-Utils.getSingularityFunctionResult(distanceFromOriginAtStart,exponent,x)*loadValAtStart
           +
-        Utils_Imperative.getSingularityFunctionResult(distanceFromOriginAtEnd,exponent, x)*loadValAtEnd)
+        Utils.getSingularityFunctionResult(distanceFromOriginAtEnd,exponent, x)*loadValAtEnd)
         +
         (loadValAtEnd - loadValAtStart)
             /(getDenominator(exponent +1)*EI
             * (distanceFromOriginAtEnd - distanceFromOriginAtStart ))
         *
-          (-Utils_Imperative.getSingularityFunctionResult(distanceFromOriginAtStart,exponent+1, x)
+          (-Utils.getSingularityFunctionResult(distanceFromOriginAtStart,exponent+1, x)
           +
-              Utils_Imperative.getSingularityFunctionResult(distanceFromOriginAtEnd,exponent+1, x));
+              Utils.getSingularityFunctionResult(distanceFromOriginAtEnd,exponent+1, x));
   }
 
-  private static double distributedMomentsProcessor(
+  private double distributedMomentsProcessor(
       double loadVal,
       double EI,
       double distanceFromOriginAtStart, double distanceFromOriginAtEnd,
       int exponent, double x){
     return (loadVal/(getDenominator(exponent)*EI))
-        *(Utils_Imperative.getSingularityFunctionResult(distanceFromOriginAtStart,exponent,x)
-        - Utils_Imperative.getSingularityFunctionResult(distanceFromOriginAtEnd,exponent,x));
+        *(Utils.getSingularityFunctionResult(distanceFromOriginAtStart,exponent,x)
+        - Utils.getSingularityFunctionResult(distanceFromOriginAtEnd,exponent,x));
   }
 
-  private static double startShear(SS_BeamModel model){
+  private double startShear(){
     double length = model.length();
-    return -1* baseModelProcessor(model,0, length)*model.modulusOfElasticity()*model.momentOfInertia()/length;
+    return -1* baseModelProcessor(0, length)*model.modulusOfElasticity()*model.momentOfInertia()/length;
   }
 
-  private static double baseModelProcessor(SS_BeamModel model, int minExponent, double x){
+  private double baseModelProcessor(int minExponent, double x){
     var pointLoad = model.loadAssembly().getPointLoads();
     var pointMoment = model.loadAssembly().getPointMoments();
     var distributedLoad = model.loadAssembly().getDistributedLoads();
@@ -85,47 +92,47 @@ public class BeamSolver_SS_Imperative {
     return output;
   }
 
-  private static double startSlope(SS_BeamModel model){
+  private double startSlope(){
     double length = model.length();
     return
-        (- startShear(model)* Math.pow(length,3)/(6*model.momentOfInertia()*model.modulusOfElasticity())
+        (- startShear()* Math.pow(length,3)/(6*model.momentOfInertia()*model.modulusOfElasticity())
          -
-        baseModelProcessor(model,2, length))/length;
+        baseModelProcessor(2, length))/length;
   }
 
-  public static double getDeflection(SS_BeamModel model, double x){
+  public double getDeflection(double x){
     double EI = model.momentOfInertia() * model.modulusOfElasticity();
     return
-            startSlope(model) * x
+            startSlope() * x
             +
-            startShear(model)* Math.pow(x,3)/(getDenominator(3)*EI)
+            startShear()* Math.pow(x,3)/(getDenominator(3)*EI)
             +
-            baseModelProcessor(model,2, x);
+            baseModelProcessor(2, x);
   }
 
-  public static double getSlope(SS_BeamModel model, double x){
+  public double getSlope(double x){
     double EI = model.momentOfInertia() * model.modulusOfElasticity();
     return
-            startSlope(model)
+            startSlope()
             +
-            startShear(model)* Math.pow(x,2)/(2*EI)
+            startShear()* Math.pow(x,2)/(2*EI)
             +
-            baseModelProcessor(model,1, x);
+            baseModelProcessor(1, x);
   }
 
-  public static double getMoment(SS_BeamModel model, double x){
+  public double getMoment(double x){
     double EI = model.momentOfInertia() * model.modulusOfElasticity();
     return
-            startShear(model) *x
+            startShear() *x
             +
-            EI * baseModelProcessor(model,0, x);
+            EI * baseModelProcessor(0, x);
   }
 
-  public static double getShear(SS_BeamModel model, double x){
+  public double getShear(double x){
     double EI = model.momentOfInertia() * model.modulusOfElasticity();
     return
-            startShear(model)
+            startShear()
             +
-            EI * baseModelProcessor(model,-1, x);
+            EI * baseModelProcessor(-1, x);
   }
 }

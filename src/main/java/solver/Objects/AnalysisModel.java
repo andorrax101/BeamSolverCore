@@ -7,5 +7,5 @@ package solver.Objects;
  * @param momentOfInertia
  * @param loadAssembly
  */
-public record SS_BeamModel(double length, double modulusOfElasticity, double momentOfInertia, LoadAssembly loadAssembly) {
+public record AnalysisModel(double length, double modulusOfElasticity, double momentOfInertia, LoadAssembly loadAssembly) {
 }

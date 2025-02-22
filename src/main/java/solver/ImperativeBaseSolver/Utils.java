@@ -1,7 +1,7 @@
 package solver.ImperativeBaseSolver;
 
-public class Utils_Imperative {
-    private Utils_Imperative(){}
+public class Utils {
+    private Utils(){}
 
     /**
      * Returns the result of &lt x-constant &gt ^exponent.
