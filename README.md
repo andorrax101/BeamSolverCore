@@ -1,5 +1,5 @@
 # Beam Solver Core
-A simple 2D beam solver for simply supported beams capable of solving any vertical load arrangement
+A simple 2D beam solver library for simply supported beams capable of solving any vertical load arrangement
 using the model formula approach noted in I.C.Jong's paper: [LINK](https://icjong.hosted.uark.edu/docu/09.ijee.paper.pdf)
 
 # Feature Set
@@ -18,6 +18,10 @@ using the model formula approach noted in I.C.Jong's paper: [LINK](https://icjon
 * No support for nonlinear analyses
 * Non-uniformly distributed moments are currently not supported
 * This solver is based on the bernoulli beam theory, so effects of shear deformations are ignored
+
+# WIP Items
+* Interactive GUI for generating models and adding loads
+* Plots for diagrams
 
 # Prerequisites
 * Java 17 or above
