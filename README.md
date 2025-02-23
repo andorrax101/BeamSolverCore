@@ -43,31 +43,29 @@ loadAssembly.addPointForce(pointForce); // LoadInstance object saved as a concen
 loadAssembly.addPointMoment(pointMoment); // LoadInstance object saved as a concentrated moemnt
 ```
 ## Distributed Loads
-Distributed forces and moments may be defined using the `LoadPair` object. Each `LoadPair` object
-takes in a start value and an end value of a loadInstance:
+Distributed forces and moments may be defined in two ways: 
+
+* Adding in comma separated instances of `LoadInstance` objects:
 ```java
 // define a trapezoidal distributed force where
 // - force value at 3 units away from beam origin is 5.0
 // - force value at 6 units away from beam origin is 2.0
 var start = new LoadInstance(5.0, 3.0);
 var end = new LoadInstance(2.0, 6.0);
-var distributedForce = new LoadPair(start, end); // object defining distributed force
-```
-As with concentrated forces, the `LoadPair` object makes no distinction between forces and moments.
-This distinction is enforced when creating the `LoadAssembly` object:
-```java
-var startForce = new LoadInstance(5.0, 3.0);
-var endForce = new LoadInstance(2.0, 6.0);
-var distributedForce = new LoadPair(startForce, endForce);
-
-var startMoment = new LoadInstance(1.0, 3.0);
-var endMoment = new LoadInstance(1.5, 6.0);
-var distributedMoment = new LoadPair(startMoment, endMoment);
 
 var loadAssembly = new LoadAssembly();
-loadAssembly.addDistributedForce(distributedForce); // LoadPair object saved as a distributed force
-loadAssembly.addDistributedMoment(distributedMoment); // LoadPair object saved as a distributed moemnt
+loadAssembly.addDistributedForce(start, end); // LoadPair object saved as a distributed force
 ```
+
+* Adding in a list of `LoadInstance` objects : 
+```java
+List<LoadInstance> loads = getLoadInstances(); // method returns a large list of varying loads (e.g. a sinusoidal wave load)
+
+var loadAssembly = new LoadAssembly();
+loadAssembly.addDistributedForce(loads); // LoadPair object saved as a distributed force
+```
+The above is also valid for the `addDistributedMoments()` method on the `LoadAssmembly` class.
+
 ## Model Assembly
 Solving the beam requires the generation of an `AnalysisModel` object. This object takes in the following params as method args:
 * beam length
