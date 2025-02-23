@@ -80,14 +80,20 @@ public class BeamSolver_SS {
     }
 
     for(var dl : distributedLoad){
-      output += distributedLoadsProcessor(dl.start().magnitude(), dl.end().magnitude(),
-              EI, dl.start().distanceFromBeamStart(), dl.end().distanceFromBeamStart(),
-              minExponent+2, x);
+      var instances = dl.getLoadInstances();
+      for(int i = 0;i< instances.length-1; i++){
+        output += distributedLoadsProcessor(instances[i].magnitude(), instances[i+1].magnitude(),
+                EI, instances[i].distanceFromBeamStart(), instances[i+1].distanceFromBeamStart(),
+                minExponent+2, x);
+      }
     }
 
-    for(var dm : distributedMoment){
-      output += distributedMomentsProcessor(dm.start().magnitude(), EI,
-              dm.start().distanceFromBeamStart(), dm.end().distanceFromBeamStart(), minExponent+1, x);
+    for(var dm : distributedMoment) {
+      var instances = dm.getLoadInstances();
+      for (int i = 0; i < instances.length - 1; i++) {
+        output += distributedMomentsProcessor(instances[i].magnitude(), EI,
+                instances[i].distanceFromBeamStart(), instances[i+1].distanceFromBeamStart(), minExponent + 1, x);
+      }
     }
     return output;
   }
