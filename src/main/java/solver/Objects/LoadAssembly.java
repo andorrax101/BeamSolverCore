@@ -1,11 +1,8 @@
 package solver.Objects;
 
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 /**
  * Container defining all loadAssembly applied to a single beam model.
  */
@@ -14,6 +11,19 @@ public class LoadAssembly {
     private final List<LoadInstance> pointMoments = new ArrayList<>();
     private final List<LoadPair> distributedLoads = new ArrayList<>();
     private final List<LoadPair> distributedMoments = new ArrayList<>();
+
+    public List<LoadInstance> getPointLoads(){
+        return pointLoads;
+    }
+    public List<LoadInstance> getPointMoments(){
+        return pointMoments;
+    }
+    public List<LoadPair> getDistributedLoads(){
+        return distributedLoads;
+    }
+    public List<LoadPair> getDistributedMoments(){
+        return distributedMoments;
+    }
 
     public void addPointForce(LoadInstance instance){
         pointLoads.add(instance);
