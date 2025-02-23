@@ -24,7 +24,7 @@ using the model formula approach noted in I.C.Jong's paper: [LINK](https://icjon
 
 # Usage and Examples
 ## Sign Convention
-Refer `ANALYSIS_MANUAL.md` for details on the sign convention used by this library.
+Refer `ANALYSIS_MANUAL.md`([LINK](ANALYSIS_MANUAL.md))for details on the sign convention used by this library.
 ## Concentrated Loads
 Concentrated forces and moments may be defined using the `LoadInstance` object:
 ```java
