@@ -36,6 +36,29 @@ class ImperativeSolverTests {
     }
 
     @Test
+    void testPointMoments(){
+        double beamLength = 10.0; // meters
+        double modulus = 32E9; // Pascals
+        double momentOfInertia = 0.3*Math.pow(0.6,3)/12; // 0.3m x 0.6m beam
+        LoadInstance pointLoad = new LoadInstance(-10, 5.0);
+
+        double midPointDisplacement = 10*Math.pow(beamLength,3)/(48*modulus*momentOfInertia);
+
+        LoadAssembly loads = new LoadAssembly();
+        loads.addPointMoment(pointLoad);
+        AnalysisModel model = new AnalysisModel(beamLength, modulus, momentOfInertia, loads);
+
+        BeamSolver_SS solver = new BeamSolver_SS(model);
+
+        double moment1 = solver.getMoment(4.999);
+        double moment2 = solver.getMoment(5.001);
+
+        assertEquals(-4.999, moment1, 1E-10);
+        assertEquals(4.999, moment2, 1E-10);
+
+    }
+
+    @Test
     void testUniformlyDistributedLoads(){
         double beamLength = 10.0; // meters
         double modulus = 32E9; // Pascals

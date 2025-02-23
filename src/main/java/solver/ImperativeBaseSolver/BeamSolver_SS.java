@@ -76,7 +76,7 @@ public class BeamSolver_SS {
     }
 
     for(var pm : pointMoment){
-      output += pointLoadAndMomentsProcessor(pm.magnitude(), EI, pm.distanceFromBeamStart(), minExponent+1, x);
+      output += pointLoadAndMomentsProcessor(pm.magnitude(), EI, pm.distanceFromBeamStart(), minExponent, x);
     }
 
     for(var dl : distributedLoad){
