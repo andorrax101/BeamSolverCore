@@ -1,6 +1,6 @@
-# BEAM SOLVER CORE
+# Beam Solver Core
 A simple 2D beam solver for simply supported beams capable of solving any vertical load arrangement
-using the model formula approach noted in I.C.Jong's paper (LINK: https://icjong.hosted.uark.edu/docu/09.ijee.paper.pdf)
+using the model formula approach noted in I.C.Jong's paper: [LINK](https://icjong.hosted.uark.edu/docu/09.ijee.paper.pdf)
 
 # Feature Set
 * Linear static analysis of 2D simply supported beams
@@ -17,7 +17,10 @@ using the model formula approach noted in I.C.Jong's paper (LINK: https://icjong
 * Boundary conditions other than those for simply supported beams aren't supported
 * No support for nonlinear analyses
 * Non-uniformly distributed moments are currently not supported
-* The theoretical basis for this solver uses the bernoulli beam theory, and therefore ignores the effects of shear deformations
+* This solver is based on the bernoulli beam theory, so effects of shear deformations are ignored
+
+# Prerequisites
+* Java 17 or above
 
 # Usage and Examples
 ## Sign Convention
