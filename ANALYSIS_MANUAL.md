@@ -4,10 +4,9 @@
 TBD...
 
 ## Sign Convention
-The sign convention details below have been excerpted from a paper by I.C.Jong (link: https://icjong.hosted.uark.edu/docu/09.ijee.paper.pdf)
+_All details below have been excerpted from a paper by I.C.Jong (link: https://icjong.hosted.uark.edu/docu/09.ijee.paper.pdf)_
 
 ### Forces and Moments
-For the beam _ab_ below, the following points hold:
 * A shear force is positive if it acts upward on the left (or downward on the right) face of the beam
 element (e.g., Va at the left end _a_, and Vb at the right end _b_ in Fig. 1).
 * At the ends of the beam, a moment is positive if it tends to cause compression in the top fiber of the
