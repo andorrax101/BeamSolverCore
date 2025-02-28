@@ -8,7 +8,7 @@ import solver.Objects.AnalysisModel;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ImperativeSolverTests {
+class SolverTests {
     @Test
     void testPointLoads(){
         double beamLength = 10.0; // meters
@@ -41,8 +41,6 @@ class ImperativeSolverTests {
         double modulus = 32E9; // Pascals
         double momentOfInertia = 0.3*Math.pow(0.6,3)/12; // 0.3m x 0.6m beam
         LoadInstance pointLoad = new LoadInstance(-10, 5.0);
-
-        double midPointDisplacement = 10*Math.pow(beamLength,3)/(48*modulus*momentOfInertia);
 
         LoadAssembly loads = new LoadAssembly();
         loads.addPointMoment(pointLoad);

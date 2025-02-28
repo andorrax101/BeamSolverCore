@@ -58,7 +58,7 @@ var start = new LoadInstance(5.0, 3.0);
 var end = new LoadInstance(2.0, 6.0);
 
 var loadAssembly = new LoadAssembly();
-loadAssembly.addDistributedForce(start, end); // LoadPair object saved as a distributed force
+loadAssembly.addDistributedForce(start, end); // LoadInstance objects saved as a distributed force
 ```
 
 * Adding in a list of `LoadInstance` objects : 
@@ -66,7 +66,7 @@ loadAssembly.addDistributedForce(start, end); // LoadPair object saved as a dist
 List<LoadInstance> loads = getLoadInstances(); // method returns a large list of varying loads (e.g. a sinusoidal wave load)
 
 var loadAssembly = new LoadAssembly();
-loadAssembly.addDistributedForce(loads); // LoadPair object saved as a distributed force
+loadAssembly.addDistributedForce(loads); // LoadInstance objects saved as a distributed force
 ```
 The above is also valid for the `addDistributedMoments()` method on the `LoadAssmembly` class.
 
