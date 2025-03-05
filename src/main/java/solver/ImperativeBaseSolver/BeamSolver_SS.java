@@ -7,6 +7,7 @@ import solver.Objects.AnalysisModel;
  * <p>Refer source link for details : <a href="https://icjong.hosted.uark.edu/docu/09.ijee.paper.pdf">LINK</a></p>
  */
 public class BeamSolver_SS {
+  private static final double TOLERANCE = 1E-10;
   private final AnalysisModel model;
   public BeamSolver_SS(AnalysisModel inputModel){
     model = inputModel;
@@ -82,6 +83,12 @@ public class BeamSolver_SS {
     for(var dl : distributedLoad){
       var instances = dl.getLoadInstances();
       for(int i = 0;i< instances.length-1; i++){
+        // if distance values at i and i+1 are equal, continue to next value
+        double distDiff = Math.abs(instances[i].distanceFromBeamStart() - instances[i+1].distanceFromBeamStart());
+        if(distDiff <= TOLERANCE){
+          continue;
+        }
+
         output += distributedLoadsProcessor(instances[i].magnitude(), instances[i+1].magnitude(),
                 EI, instances[i].distanceFromBeamStart(), instances[i+1].distanceFromBeamStart(),
                 minExponent+2, x);
@@ -91,6 +98,12 @@ public class BeamSolver_SS {
     for(var dm : distributedMoment) {
       var instances = dm.getLoadInstances();
       for (int i = 0; i < instances.length - 1; i++) {
+        // if distance values at i and i+1 are equal, continue to next value
+        double distDiff = Math.abs(instances[i].distanceFromBeamStart() - instances[i+1].distanceFromBeamStart());
+        if(distDiff <= TOLERANCE){
+          continue;
+        }
+
         output += distributedMomentsProcessor(instances[i].magnitude(), EI,
                 instances[i].distanceFromBeamStart(), instances[i+1].distanceFromBeamStart(), minExponent + 1, x);
       }
